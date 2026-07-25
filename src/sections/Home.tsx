@@ -2,6 +2,8 @@
 import { Bell } from 'lucide-react'
 import { SunMoon } from 'lucide-react'
 import { CircleUserRound } from 'lucide-react'
+import {Power} from 'lucide-react'
+import {Settings} from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { useLiveStatusStore } from '../store/LiveStore'
@@ -16,6 +18,7 @@ export default function Home() {
 const { mutate: markRead } = useMarkNotificationRead();
 const { mutate: markAllRead } = useMarkAllNotificationsRead();
 const [showNotifDrawer, setShowNotifDrawer] = useState(false);
+const [showProfileMenu, setShowProfileMenu] = useState(false);
 
 
 const unreadCount = notifications?.filter((n) => !n.isRead).length ?? 0;
@@ -60,9 +63,24 @@ const unreadCount = notifications?.filter((n) => !n.isRead).length ?? 0;
             <SunMoon />
           </span>
 
-          <span className="cursor-pointer hover:bg-black/20 p-4 rounded-full">
+          <span className="cursor-pointer hover:bg-black/20 p-4 rounded-full"  onClick={()=> setShowProfileMenu(!showProfileMenu)}>
             <CircleUserRound />
           </span>
+          {showProfileMenu && (
+    <div className="absolute right-3 top-full mt-2 w-48 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg py-1 z-50">
+      <div className="px-3 py-2 text-sm border-b border-gray-100 dark:border-slate-700">
+        <div className="font-medium">Ayan</div>
+        <div className="text-xs text-gray-500">AP Reviewer</div>
+      </div>
+      <button className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-slate-700 flex flex-row items-center gap-3">
+     <Settings  size={15}/>   Profile Settings
+      </button>
+      <button className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-slate-700 flex flex-row items-center gap-3">
+
+         <Power  size={15}/>Sign Out
+      </button>
+    </div>
+  )}
         </div>
       </div>
 
